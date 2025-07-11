@@ -73,16 +73,15 @@ export function ContactForm() {
   };
 
   return (
-    <section id="contacto" className="py-16 bg-gray-50">
-      <div className="container px-4">
+    <section id="contacto" className="py-16 bg-gray-50 w-full overflow-hidden">
+      <div className="container px-4 w-full max-w-7xl mx-auto">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Contáctanos
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              ¿Necesitas una mudanza o tienes alguna pregunta? Estamos aquí para ayudarte. 
-              Contáctanos y te responderemos lo antes posible.
+              ¿Necesitas una mudanza o tienes alguna pregunta? Estamos aquí para ayudarte.
             </p>
           </div>
 

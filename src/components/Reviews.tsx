@@ -153,17 +153,13 @@ export function Reviews() {
 
           {/* Stats */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="text-center p-6 bg-gradient-to-br from-[#ff914d] to-[#e8823d] rounded-2xl text-white">
+            <div className="text-center p-6 bg-gradient-to-br from-[#ff914d] to-[#e8823d] rounded-2xl text-white md:col-span-1">
               <div className="text-3xl font-bold mb-2">100%</div>
               <div className="text-lg">Clientes Satisfechos</div>
             </div>
-            <div className="text-center p-6 bg-gradient-to-br from-[#0966e1] to-[#0854c7] rounded-2xl text-white">
+            <div className="text-center p-6 bg-gradient-to-br from-[#0966e1] to-[#0854c7] rounded-2xl text-white md:col-span-2">
               <div className="text-3xl font-bold mb-2">6+</div>
               <div className="text-lg">Años de Experiencia</div>
-            </div>
-            <div className="text-center p-6 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl text-white">
-              <div className="text-3xl font-bold mb-2">500+</div>
-              <div className="text-lg">Mudanzas Exitosas</div>
             </div>
           </div>
         </div>
