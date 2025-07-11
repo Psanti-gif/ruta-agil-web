@@ -15,13 +15,11 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between px-4 w-full max-w-7xl mx-auto">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <div className="flex items-center justify-center w-10 h-10 bg-[#ff914d] rounded-lg">
-            <Truck className="h-6 w-6 text-white" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-gray-900">RUTA ÁGIL</span>
-            <span className="text-xs text-gray-600">GROUP S.A.S</span>
-          </div>
+          <img 
+            src="/logo ruta agil.png" 
+            alt="RUTA ÁGIL GROUP S.A.S" 
+            className="h-12 w-auto"
+          />
         </div>
 
         {/* Desktop Navigation */}
@@ -32,11 +30,11 @@ export function Header() {
           <a href="#servicios" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
             Servicios
           </a>
-          <a href="#nosotros" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
-            Nosotros
+          <a href="#quienes-somos" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
+            ¿Quiénes somos?
           </a>
-          <a href="#operaciones" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
-            Área de operaciones
+          <a href="#resenas" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
+            Reseñas
           </a>
           <a href="#contacto" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
             Contacto
@@ -62,7 +60,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-      <div className="md:hidden border-t bg-white w-full">
+        <div className="md:hidden border-t bg-white w-full">
           <nav className="container px-4 py-4 space-y-3">
             <a href="#inicio" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               Inicio
@@ -70,11 +68,11 @@ export function Header() {
             <a href="#servicios" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               Servicios
             </a>
-            <a href="#nosotros" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
-              Nosotros
+            <a href="#quienes-somos" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
+              ¿Quiénes somos?
             </a>
-            <a href="#operaciones" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
-              Área de operaciones
+            <a href="#resenas" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
+              Reseñas
             </a>
             <a href="#contacto" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               Contacto
@@ -86,8 +84,7 @@ export function Header() {
             </div>
           </nav>
         </div>
-        )}
-        
+      )}
     </header>
   );
 }

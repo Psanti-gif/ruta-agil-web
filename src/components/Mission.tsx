@@ -21,7 +21,7 @@ export function Mission() {
               <span className="font-semibold"> integridad, responsabilidad y respeto</span>, buscando 
               siempre la satisfacción de nuestros clientes. Nuestro objetivo es ser un referente en 
               el sector, generando confianza, <span className="font-semibold">cuidando el medio ambiente 
-              y aportando al bienestar de las comunidades</span>.
+              y aportando al bienestar de las comunidades con cada viaje que realizamos</span>.
             </p>
             
             <div className="grid md:grid-cols-4 gap-6 mt-8">

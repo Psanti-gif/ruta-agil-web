@@ -9,10 +9,10 @@ export function OperationsArea() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Cobertura Actual y Expansión
+              Área de Operaciones
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Desde el Valle de Aburrá hacia todo Colombia
+              Desde el área metropolitana de Medellín hacia todo Colombia
             </p>
           </div>
 
@@ -27,12 +27,12 @@ export function OperationsArea() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        Base de Operaciones
+                        Área Metropolitana de Medellín
                       </h3>
                       <p className="text-gray-600">
-                        Nuestra base está en el <span className="font-semibold">Área Metropolitana 
-                        del Valle de Aburrá</span>, desde donde coordinamos todas nuestras operaciones 
-                        con la más alta eficiencia.
+                        Nuestra área de operaciones está inicialmente centrada en el 
+                        <span className="font-semibold"> área metropolitana de Medellín</span>, 
+                        donde hemos consolidado una base sólida.
                       </p>
                     </div>
                   </div>
@@ -43,12 +43,12 @@ export function OperationsArea() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-2">
-                        Optimización de Rutas
+                        Expansión Nacional
                       </h3>
                       <p className="text-gray-600">
-                        Gracias a nuestra <span className="font-semibold">optimización de rutas, 
-                        talento humano y alianzas estratégicas</span>, pronto llevaremos nuestros 
-                        servicios a todo el país.
+                        Estamos expandiéndonos hacia todo el país, con enfoque en la 
+                        <span className="font-semibold"> optimización de rutas, puntualidad, 
+                        cuidado y cobertura nacional</span>.
                       </p>
                     </div>
                   </div>
@@ -101,10 +101,10 @@ export function OperationsArea() {
                   
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                      Valle de Aburrá
+                      Conectamos personas y negocios en todo Colombia
                     </h3>
                     <p className="text-gray-600 mb-4">Base de operaciones</p>
-                    
+                      ¡Súmate a este viaje ágil y eficiente!
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-center space-x-2">
                         <div className="w-3 h-3 bg-[#ff914d] rounded-full"></div>

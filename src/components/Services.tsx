@@ -39,8 +39,11 @@ export function Services() {
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Contamos con el personal idóneo y capacitado para el cuidado y resguardo de sus bienes, 
-              garantizando un servicio de mudanza, envío, mensajería o paquetería seguro y confiable. 
-              Nuestro equipo recibe formación continua y trabaja con total responsabilidad.
+              garantizando así un servicio de mudanza, envío, mensajería o paquetería seguro y confiable.
+            </p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+              Nuestro equipo está compuesto por profesionales altamente capacitados y comprometidos, 
+              quienes reciben formación continua para manejar cada envío con atención y responsabilidad.
             </p>
           </div>
 

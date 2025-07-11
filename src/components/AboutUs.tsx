@@ -7,10 +7,10 @@ export function AboutUs() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Quiénes Somos
+              ¿Quiénes Somos?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Un equipo comprometido con brindar soluciones logísticas excepcionales
+              Un equipo comprometido y apasionado por brindar soluciones logísticas excepcionales
             </p>
           </div>
 
@@ -20,18 +20,22 @@ export function AboutUs() {
               <div className="bg-gradient-to-r from-[#ff914d] to-[#e8823d] p-6 rounded-2xl text-white">
                 <h3 className="text-2xl font-bold mb-4">Más de 6 años de experiencia</h3>
                 <p className="text-lg leading-relaxed">
-                  Somos un equipo comprometido con brindar soluciones logísticas de forma 
-                  rápida, segura y confiable. Más de 6 años de experiencia respaldan nuestro 
-                  compromiso con la puntualidad, el cuidado y la satisfacción.
+                  En RUTA ÁGIL GROUP S.A.S somos un equipo comprometido y apasionado por brindar 
+                  soluciones de mudanzas, mensajería y paquetería de forma rápida, segura y confiable.
                 </p>
               </div>
               
               <p className="text-lg text-gray-700 leading-relaxed">
-                No solo transportamos objetos: <span className="font-semibold text-[#0966e1]">
-                generamos confianza y relaciones duraderas</span>. Nuestro equipo recibe 
-                formación continua y trabaja con total responsabilidad, garantizando que 
-                cada mudanza, envío o servicio de mensajería se realice con los más altos 
-                estándares de calidad.
+                Con más de <span className="font-semibold text-[#0966e1]">6 años de experiencia</span> en el sector, 
+                comprendemos el valor detrás de cada envío, ya sea un documento urgente, una encomienda especial 
+                o el traslado completo de un hogar.
+              </p>
+              
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Nuestra misión es <span className="font-semibold text-[#0966e1]">conectar personas y empresas</span>, 
+                asegurando que cada servicio se realice con puntualidad, cuidado y total satisfacción. 
+                Nos destacamos por ofrecer una atención al cliente cercana y profesional. Contamos con 
+                equipo humano capacitado, vehículos propios y aliados estratégicos.
               </p>
 
               <div className="grid md:grid-cols-3 gap-4">

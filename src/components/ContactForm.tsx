@@ -6,6 +6,7 @@ import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
@@ -14,8 +15,8 @@ import { toast } from "sonner";
 // Esquema de validación con Zod
 const contactSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-  email: z.string().email("Ingrese un correo electrónico válido"),
   phone: z.string().min(10, "El teléfono debe tener al menos 10 dígitos"),
+  service: z.string().min(1, "Seleccione un tipo de servicio"),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
 });
 
@@ -42,8 +43,8 @@ export function ContactForm() {
       // Configuración de EmailJS - Reemplazar con tus credenciales reales
       const templateParams = {
         from_name: data.name,
-        from_email: data.email,
         phone: data.phone,
+        service: data.service,
         message: data.message,
         to_name: "RUTA ÁGIL GROUP S.A.S",
       };
@@ -99,7 +100,7 @@ export function ContactForm() {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Teléfono</p>
-                      <p className="text-gray-600">+57 300 123 4567</p>
+                      <p className="text-gray-600">301 545 8611</p>
                     </div>
                   </div>
 
@@ -120,8 +121,8 @@ export function ContactForm() {
                     <div>
                       <p className="font-semibold text-gray-900">Dirección</p>
                       <p className="text-gray-600">
-                        Calle 123 #45-67<br />
-                        Bogotá, Colombia
+                        Área Metropolitana<br />
+                        Medellín, Colombia
                       </p>
                     </div>
                   </div>
@@ -176,24 +177,6 @@ export function ContactForm() {
                   </div>
 
                   <div>
-                    <Label htmlFor="email">Correo Electrónico *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="tu@email.com"
-                      aria-label="Correo electrónico"
-                      {...register("email")}
-                      className={errors.email ? "border-red-500" : ""}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-red-600 mt-1 flex items-center">
-                        <AlertCircle className="h-4 w-4 mr-1" />
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
                     <Label htmlFor="phone">Teléfono *</Label>
                     <Input
                       id="phone"
@@ -207,6 +190,28 @@ export function ContactForm() {
                       <p className="text-sm text-red-600 mt-1 flex items-center">
                         <AlertCircle className="h-4 w-4 mr-1" />
                         {errors.phone.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="service">Tipo de Servicio *</Label>
+                    <Select onValueChange={(value) => register("service").onChange({ target: { value } })}>
+                      <SelectTrigger className={errors.service ? "border-red-500" : ""}>
+                        <SelectValue placeholder="Selecciona un servicio" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="mudanza">Mudanza</SelectItem>
+                        <SelectItem value="paqueteria">Paquetería</SelectItem>
+                        <SelectItem value="mensajeria">Mensajería</SelectItem>
+                        <SelectItem value="envios">Envíos</SelectItem>
+                        <SelectItem value="otros">Otros</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.service && (
+                      <p className="text-sm text-red-600 mt-1 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.service.message}
                       </p>
                     )}
                   </div>
@@ -231,7 +236,7 @@ export function ContactForm() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700"
+                    className="w-full bg-[#ff914d] hover:bg-[#e8823d]"
                     disabled={isSubmitting}
                     aria-label="Enviar mensaje de contacto"
                   >

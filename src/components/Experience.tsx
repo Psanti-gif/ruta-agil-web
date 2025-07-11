@@ -14,10 +14,9 @@ export function Experience() {
           </h2>
           
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-            Con 4 años de experiencia en la industria de mudanzas, nuestro equipo de 
+            Con 6 años de experiencia en la industria de mudanzas, nuestro equipo de 
             profesionales está capacitado para manejar cualquier situación. Nos enorgullece 
-            ofrecer un servicio que supera las expectativas de nuestros clientes, garantizando 
-            la seguridad y el cuidado de sus pertenencias más valiosas.
+            ofrecer un servicio de alta calidad que supera las expectativas de nuestros clientes.
           </p>
         </div>
       </div>

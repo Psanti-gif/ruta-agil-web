@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Truck, Phone, Mail, MapPin, Facebook, Instagram, MessageCircle,Music2 } from "lucide-react";
+import { Truck, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import { openWhatsApp, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
-
 
 export function Footer() {
   const handleWhatsAppClick = () => {
@@ -15,22 +14,20 @@ export function Footer() {
           {/* Company Info */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="flex items-center justify-center w-10 h-10 bg-[#ff914d] rounded-lg">
-                <Truck className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold">RUTA ÁGIL</span>
-                <span className="text-xs text-gray-400">GROUP S.A.S</span>
-              </div>
+              <img 
+                src="/logo ruta agil.png" 
+                alt="RUTA ÁGIL GROUP S.A.S" 
+                className="h-10 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Empresa líder en servicios de mudanzas, envíos y mensajería con más de 4 años 
+              Empresa líder en servicios de mudanzas, envíos y mensajería con más de 6 años 
               de experiencia. Comprometidos con la excelencia y satisfacción de nuestros clientes.
             </p>
             <div className="flex space-x-4">
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://www.facebook.com/profile.php?id=100087139382268&locale=es_LA', '_blank')}
+                onClick={() => window.open('https://facebook.com/rutaagil', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Facebook - Ruta Ágil"
@@ -44,8 +41,7 @@ export function Footer() {
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="TikTok - @rutaagil"
               >
-                <Music2 className="h-4 w-4" />
-
+                <span className="text-sm font-bold">TT</span>
               </Button>
               <Button 
                 size="sm" 
@@ -54,11 +50,10 @@ export function Footer() {
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="WhatsApp - Contacto directo"
               >
-                <MessageCircle className="h-4 w-4"/>
+                <span className="text-sm font-bold">WA</span>
               </Button>
               <Button 
-                size="sm"
-                onClick={() => window.open('https://www.instagram.com/ruta_mudanzas_envios/', '_blank')}
+                size="sm" 
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Instagram - Próximamente"
@@ -83,8 +78,13 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#nosotros" className="text-gray-300 hover:text-[#ff914d] transition-colors">
-                  Nosotros
+                <a href="#quienes-somos" className="text-gray-300 hover:text-[#ff914d] transition-colors">
+                  ¿Quiénes somos?
+                </a>
+              </li>
+              <li>
+                <a href="#resenas" className="text-gray-300 hover:text-[#ff914d] transition-colors">
+                  Reseñas
                 </a>
               </li>
               <li>
@@ -112,7 +112,7 @@ export function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-[#ff914d] mt-1" />
                 <span className="text-gray-300">
-                  Bogotá, Colombia<br />
+                  Medellín, Colombia<br />
                   Servicio a nivel nacional
                 </span>
               </div>
@@ -123,7 +123,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2025 RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
+            © 2024 RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="text-gray-400 text-sm">
