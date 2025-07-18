@@ -107,7 +107,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-[#ff914d]" />
-                <span className="text-gray-300">info@rutaagil.com</span>
+                <span className="text-gray-300">info@rutaagil.com.co</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-[#ff914d] mt-1" />
@@ -123,7 +123,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © 2024 RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
+            © 2025 RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <span className="text-gray-400 text-sm">
