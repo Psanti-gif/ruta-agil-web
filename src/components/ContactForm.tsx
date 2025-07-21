@@ -109,7 +109,7 @@ export function ContactForm() {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Correo Electrónico</p>
-                      <p className="text-gray-600">info@rutaagil.com</p>
+                      <p className="text-gray-600">info@rutaagil.com.co</p>
                     </div>
                   </div>
 
