@@ -12,7 +12,7 @@ export const WHATSAPP_NUMBER = "573015458611"; // Reemplaza con el número real
  * @returns URL de WhatsApp
  */
 export function generateWhatsAppLink(message?: string): string {
-  const defaultMessage = "¡Hola!  Me interesa solicitar una cotización para mudanza con RUTA ÁGIL GROUP S.A.S. ¿Podrían ayudarme con información sobre precios y disponibilidad? ¡Gracias!";
+  const defaultMessage = "¡Hola RUTA ÁGIL!  Me interesa solicitar una cotización para mudanza. ¿Podrían ayudarme con información?";
 
   const finalMessage = message || defaultMessage;
   // Codificación más robusta para WhatsApp
@@ -36,7 +36,7 @@ export function openWhatsApp(message?: string): void {
  * Mensajes predefinidos para diferentes tipos de consulta
  */
 export const WHATSAPP_MESSAGES = {
-  cotizacion: "¡Hola RUTA ÁGIL!  Me interesa solicitar una cotización para mudanza. ¿Podrían ayudarme con información sobre precios y disponibilidad? Necesito cotizar: Tipo de mudanza, origen y destino, fecha tentativa. ¡Gracias!",
+  cotizacion: "¡Hola RUTA ÁGIL!  Me interesa solicitar una cotización para mudanza. ¿Podrían ayudarme con información?",
 
   servicios: "¡Hola!  Me gustaría conocer más información sobre los servicios de RUTA ÁGIL GROUP S.A.S. ¿Podrían contarme sobre tipos de mudanza, servicios de envío y cobertura? ¡Gracias!",
 
