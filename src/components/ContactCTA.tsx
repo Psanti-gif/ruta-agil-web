@@ -1,18 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Phone, MessageCircle, ArrowRight } from "lucide-react";
-import { openWhatsApp, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
+import { MessageCircle, ArrowRight } from "lucide-react";
 
 export function ContactCTA() {
-  const handleCotizacionClick = () => {
-    openWhatsApp(WHATSAPP_MESSAGES.cotizacion);
-  };
-
   const handleWhatsAppClick = () => {
-    openWhatsApp(WHATSAPP_MESSAGES.contacto);
-  };
-
-  const handlePhoneClick = () => {
-    window.open('tel:+573015458611', '_self');
+    const message = "Hola, estoy interesado en conocer más sobre los servicios de Ruta Ágil.";
+    const whatsappUrl = `https://wa.me/573015458611?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -26,37 +19,16 @@ export function ContactCTA() {
             Obtén tu cotización personalizada y descubre por qué somos la mejor opción
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex justify-center">
             <Button 
               size="lg" 
-              onClick={handleCotizacionClick}
+              onClick={handleWhatsAppClick}
               className="bg-white text-[#ff914d] hover:bg-gray-100 hover:shadow-xl transition-all duration-300 px-8 py-4 text-lg font-semibold group"
             >
-              Cotiza tu mudanza ahora
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Escríbenos por WhatsApp
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            
-            <div className="flex items-center space-x-4">
-              <Button 
-                size="lg" 
-                onClick={handlePhoneClick}
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-[#ff914d] transition-all duration-300"
-              >
-                <Phone className="h-5 w-5 mr-2" />
-                301 545 8611
-              </Button>
-              
-              <Button 
-                size="lg" 
-                onClick={handleWhatsAppClick}
-                variant="outline" 
-                className="border-white text-white hover:bg-white hover:text-[#ff914d] transition-all duration-300"
-              >
-                <MessageCircle className="h-5 w-5 mr-2" />
-                WhatsApp
-              </Button>
-            </div>
           </div>
           
           <p className="text-orange-100 mt-6 text-lg">

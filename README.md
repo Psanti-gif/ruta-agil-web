@@ -158,5 +158,3 @@ El componente `CotizacionPreview` está documentado y preparado para:
 Este proyecto está desarrollado para RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
 
 ---
-
-**Contacto del Proyecto**: info@rutaagil.com | 301 545 8611

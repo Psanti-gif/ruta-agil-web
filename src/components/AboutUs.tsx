@@ -2,7 +2,7 @@ import { Users, MapPin, Zap } from "lucide-react";
 
 export function AboutUs() {
   return (
-    <section className="py-16 bg-white w-full overflow-hidden">
+    <section id="quienes-somos" className="py-16 bg-white w-full overflow-hidden">
       <div className="container px-4 w-full max-w-7xl mx-auto">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +14,7 @@ import { toast } from "sonner";
 // Esquema de validación con Zod
 const contactSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
+  email: z.string().email("Email inválido").optional().or(z.literal("")),
   phone: z.string().min(10, "El teléfono debe tener al menos 10 dígitos"),
   service: z.string().min(1, "Seleccione un tipo de servicio"),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
@@ -30,6 +30,7 @@ export function ContactForm() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -40,40 +41,35 @@ export function ContactForm() {
     setSubmitStatus('idle');
 
     try {
-      // Configuración de EmailJS - Reemplazar con tus credenciales reales
-      const templateParams = {
-        from_name: data.name,
-        phone: data.phone,
-        service: data.service,
-        message: data.message,
-        to_name: "RUTA ÁGIL GROUP S.A.S",
-      };
+      // Envío usando PHP backend compatible con Hostinger
+      const response = await fetch('/contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-      // TODO: Configurar EmailJS con credenciales reales
-      // await emailjs.send(
-      //   'YOUR_SERVICE_ID',
-      //   'YOUR_TEMPLATE_ID',
-      //   templateParams,
-      //   'YOUR_PUBLIC_KEY'
-      // );
+      const result = await response.json();
 
-      // Simulación de envío exitoso para demo
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Error al enviar el mensaje');
+      }
       
       setSubmitStatus('success');
-      toast.success("¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto.");
+      toast.success(result.message);
       reset();
     } catch (error) {
       console.error('Error al enviar el mensaje:', error);
       setSubmitStatus('error');
-      toast.error("Error al enviar el mensaje. Por favor, intenta nuevamente.");
+      toast.error(error instanceof Error ? error.message : "Error al enviar el mensaje. Por favor, intenta nuevamente o contáctanos directamente al 301 545 8611.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contacto" className="py-16 bg-gray-50 w-full overflow-hidden">
+    <section id="contactanos" className="py-16 bg-gray-50 w-full overflow-hidden">
       <div className="container px-4 w-full max-w-7xl mx-auto">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -176,6 +172,23 @@ export function ContactForm() {
                   </div>
 
                   <div>
+                    <Label htmlFor="email">Correo Electrónico (Opcional)</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="tu@email.com"
+                      aria-label="Correo electrónico"
+                      {...register("email")}
+                      className={errors.email ? "border-red-500" : ""}
+                    />
+                    {errors.email && (
+                      <p className="text-sm text-red-600 mt-1 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.email.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
                     <Label htmlFor="phone">Teléfono *</Label>
                     <Input
                       id="phone"
@@ -195,7 +208,7 @@ export function ContactForm() {
 
                   <div>
                     <Label htmlFor="service">Tipo de Servicio *</Label>
-                    <Select onValueChange={(value) => register("service").onChange({ target: { value } })}>
+                    <Select onValueChange={(value) => setValue("service", value)}>
                       <SelectTrigger className={errors.service ? "border-red-500" : ""}>
                         <SelectValue placeholder="Selecciona un servicio" />
                       </SelectTrigger>

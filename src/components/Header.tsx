@@ -27,17 +27,17 @@ export function Header() {
           <a href="#inicio" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
             Inicio
           </a>
-          <a href="#servicios" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
-            Servicios
-          </a>
           <a href="#quienes-somos" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
             ¿Quiénes somos?
+          </a>
+          <a href="#servicios" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
+            Servicios
           </a>
           <a href="#resenas" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
             Reseñas
           </a>
-          <a href="#contacto" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
-            Contacto
+          <a href="#contactanos" className="text-gray-700 hover:text-[#0966e1] transition-colors font-medium">
+            Contáctenos
           </a>
         </nav>
 
@@ -65,17 +65,17 @@ export function Header() {
             <a href="#inicio" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               Inicio
             </a>
-            <a href="#servicios" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
-              Servicios
-            </a>
             <a href="#quienes-somos" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               ¿Quiénes somos?
+            </a>
+            <a href="#servicios" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
+              Servicios
             </a>
             <a href="#resenas" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
               Reseñas
             </a>
-            <a href="#contacto" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
-              Contacto
+            <a href="#contactanos" className="block py-2 text-gray-700 hover:text-[#0966e1] transition-colors">
+              Contáctenos
             </a>
             <div className="pt-2">
               <Button onClick={handleCotizaClick} className="w-full bg-[#ff914d] hover:bg-[#e8823d] hover:shadow-lg transition-all duration-300 text-white">

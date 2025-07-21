@@ -27,7 +27,7 @@ export function Footer() {
             <div className="flex space-x-4">
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://www.facebook.com/profile.php?id=100087139382268&locale=es_LA', '_blank')}
+                onClick={() => window.open('https://facebook.com/rutaagil', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Facebook - Ruta Ágil"
@@ -54,7 +54,6 @@ export function Footer() {
               </Button>
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://www.instagram.com/ruta_mudanzas_envios/', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Instagram - Próximamente"
