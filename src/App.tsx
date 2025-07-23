@@ -9,6 +9,7 @@ import { Reviews } from "./components/Reviews";
 import { CotizacionPreview } from "./components/CotizacionPreview";
 import { ContactCTA } from "./components/ContactCTA";
 import { ContactForm } from "./components/ContactForm";
+import { ProjectGallery } from "./components/ProjectGallery";
 import { Footer } from "./components/Footer";
 import "./App.css";
 
@@ -26,6 +27,7 @@ function App() {
         <Reviews />
         <CotizacionPreview />
         <ContactCTA />
+        <ProjectGallery />
         <ContactForm />
       </main>
       <Footer />

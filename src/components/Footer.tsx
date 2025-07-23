@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Truck, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
+import {Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import { openWhatsApp, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
 
 export function Footer() {
