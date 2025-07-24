@@ -19,46 +19,39 @@ import { ChevronLeft, ChevronRight, Camera } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "Mudanza Residencial Completa",
-    description: "Traslado seguro de hogar familiar en Medellín",
-    image: "/images/proyecto1.jpg", // ⬅️ CAMBIAR ESTA RUTA
-    category: "Residencial"
+    title: "Equipo de Trabajo",
+    description: "Conoce a nuestro gran equipo de trabajo",
+    image: "/images/1.jpg", 
+    category: "Equipo"
   },
   {
     id: 2,
     title: "Mudanza Comercial Oficina",
     description: "Reubicación de oficina empresarial",
-    image: "/images/proyecto2.jpg", // ⬅️ CAMBIAR ESTA RUTA
+    image: "/images/2.jpg", 
     category: "Comercial"
   },
   {
     id: 3,
     title: "Envío Especializado",
     description: "Transporte de equipos delicados",
-    image: "/images/proyecto3.jpg", // ⬅️ CAMBIAR ESTA RUTA
+    image: "/images/3.jpg", // ⬅️ CAMBIAR ESTA RUTA
     category: "Envíos"
   },
   {
     id: 4,
     title: "Mudanza Apartamento",
     description: "Traslado eficiente en el área metropolitana",
-    image: "/images/proyecto4.jpg", // ⬅️ CAMBIAR ESTA RUTA
+    image: "/images/4.jpg", // ⬅️ CAMBIAR ESTA RUTA
     category: "Residencial"
   },
   {
     id: 5,
     title: "Paquetería Express",
     description: "Entrega rápida y segura",
-    image: "/images/proyecto5.jpg", // ⬅️ CAMBIAR ESTA RUTA
+    image: "/images/5.jpg", // ⬅️ CAMBIAR ESTA RUTA
     category: "Paquetería"
   },
-  {
-    id: 6,
-    title: "Mudanza Local Comercial",
-    description: "Reubicación de negocio familiar",
-    image: "/images/proyecto6.jpg", // ⬅️ CAMBIAR ESTA RUTA
-    category: "Comercial"
-  }
 ];
 
 export function ProjectGallery() {
@@ -148,11 +141,7 @@ export function ProjectGallery() {
                             backgroundPosition: 'center'
                           }}
                         >
-                          {/* Fallback cuando no hay imagen */}
-                          <div className="text-white text-center">
-                            <Camera className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                            <p className="text-sm opacity-75">Imagen del proyecto</p>
-                          </div>
+                          
                         </div>
                         
                         {/* Overlay con categoría */}
@@ -229,7 +218,7 @@ export function ProjectGallery() {
           {/* Estadística adicional */}
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
-              <div className="text-3xl font-bold text-[#ff914d] mb-2">100+</div>
+              <div className="text-3xl font-bold text-[#ff914d] mb-2">1500+</div>
               <div className="text-gray-600">Proyectos Completados</div>
             </div>
             <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
