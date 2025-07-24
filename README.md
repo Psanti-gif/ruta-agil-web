@@ -60,7 +60,7 @@ Landing page moderna y profesional para empresa de mudanzas desarrollada con Rea
    - Enlaces a redes sociales:
      - Facebook: Ruta Ágil
      - TikTok: @rutaagil
-     - Instagram: (próximamente)
+     - Instagram: ruta_mudanzas_envios
 
 ## 🛠️ Tecnologías
 
@@ -140,7 +140,7 @@ El componente `CotizacionPreview` está documentado y preparado para:
 
 - **Facebook**: Ruta Ágil
 - **TikTok**: @rutaagil
-- **Instagram**: Próximamente
+- **Instagram**: ruta_mudanzas_envios
 - **Teléfono**: 301 545 8611
 
 ## 🎯 Próximos Pasos Recomendados
