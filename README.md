@@ -37,7 +37,7 @@ Landing page moderna y profesional para empresa de mudanzas desarrollada con Rea
    - Teléfono de contacto directo: **301 545 8611**
 
 3. **Experiencia**: 
-   - Destacar 4 años de experiencia
+   - Destacar 6 años de experiencia
    - Fondo con color corporativo neutro
 
 4. **Servicios**: 
