@@ -37,9 +37,15 @@ if (isset($input['email']) && !empty($input['email'])) {
     }
 }
 
+// Obtener información del servidor para headers mejorados
+$server_name = $_SERVER['SERVER_NAME'] ?? 'rutaagil.com.co';
+$client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+$timestamp = date('Y-m-d H:i:s');
+
 // Configuración de correo
 $to = 'info@rutaagil.com.co';
-$subject = 'Nueva consulta desde sitio web RUTA ÁGIL - ' . $service;
+$subject = 'Consulta de servicio: ' . $service . ' - RUTA AGIL';
 
 // Crear el mensaje HTML
 $html_message = "
@@ -47,22 +53,29 @@ $html_message = "
 <html>
 <head>
     <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Consulta de Cliente - RUTA AGIL</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #ff914d; color: white; padding: 20px; text-align: center; }
+        .header { background-color: #ff914d; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
         .content { background-color: #f9f9f9; padding: 20px; }
         .field { margin-bottom: 15px; }
         .label { font-weight: bold; color: #0966e1; }
-        .footer { background-color: #333; color: white; padding: 15px; text-align: center; font-size: 12px; }
+        .footer { background-color: #333; color: white; padding: 15px; text-align: center; font-size: 12px; border-radius: 0 0 8px 8px; }
+        .info-box { background-color: #e8f4fd; padding: 10px; border-left: 4px solid #0966e1; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class='container'>
         <div class='header'>
-            <h2>Nueva Consulta - RUTA ÁGIL GROUP S.A.S</h2>
+            <h2>Consulta de Cliente - RUTA AGIL GROUP S.A.S</h2>
+            <p>Solicitud recibida el $timestamp</p>
         </div>
         <div class='content'>
+            <div class='info-box'>
+                <strong>Tipo de Servicio Solicitado:</strong> $service
+            </div>
             <div class='field'>
                 <span class='label'>Nombre:</span> $name
             </div>
@@ -79,30 +92,41 @@ if (!empty($email)) {
 
 $html_message .= "
             <div class='field'>
-                <span class='label'>Tipo de Servicio:</span> $service
-            </div>
-            <div class='field'>
                 <span class='label'>Mensaje:</span><br>
                 " . nl2br($message) . "
             </div>
+            <div class='info-box'>
+                <small>
+                    <strong>Información técnica:</strong><br>
+                    IP: $client_ip<br>
+                    Navegador: " . substr($user_agent, 0, 100) . "
+                </small>
+            </div>
         </div>
         <div class='footer'>
-            <p>© 2025 RUTA ÁGIL GROUP S.A.S - Todos los derechos reservados</p>
-            <p>Este mensaje fue enviado desde el formulario de contacto del sitio web</p>
-            <p>Responder directamente a este correo o contactar al 301 545 8611</p>
+            <p><strong>RUTA AGIL GROUP S.A.S</strong> - Servicios de Mudanza</p>
+            <p>Mensaje enviado desde formulario web oficial</p>
+            <p>Contacto directo: 301 545 8611</p>
         </div>
     </div>
 </body>
 </html>
 ";
 
-// Headers para el correo
+// Headers mejorados para evitar spam
 $headers = array(
     'MIME-Version: 1.0',
     'Content-type: text/html; charset=UTF-8',
-    'From: noreply@rutaagil.com.co',
-    'Reply-To: ' . (!empty($email) ? $email : $phone),
-    'X-Mailer: PHP/' . phpversion()
+    'From: "RUTA AGIL Formulario Web" <noreply@' . $server_name . '>',
+    'Reply-To: ' . (!empty($email) ? $email : 'info@rutaagil.com.co'),
+    'Return-Path: noreply@' . $server_name,
+    'X-Mailer: RUTA-AGIL-WEB/1.0',
+    'X-Priority: 3',
+    'X-MSMail-Priority: Normal',
+    'X-Originating-IP: ' . $client_ip,
+    'Message-ID: <' . time() . '.' . uniqid() . '@' . $server_name . '>',
+    'Date: ' . date('r'),
+    'List-Unsubscribe: <mailto:info@rutaagil.com.co?subject=Unsubscribe>'
 );
 
 // Enviar el correo
@@ -111,13 +135,13 @@ $mail_sent = mail($to, $subject, $html_message, implode("\r\n", $headers));
 if ($mail_sent) {
     echo json_encode([
         'success' => true, 
-        'message' => '¡Mensaje enviado exitosamente! Nos pondremos en contacto contigo pronto. También puedes escribirnos al WhatsApp 301 545 8611.'
+        'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto. También puedes escribirnos al WhatsApp 301 545 8611.'
     ]);
 } else {
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'Error al enviar el mensaje. Por favor, intenta nuevamente o contáctanos directamente al 301 545 8611.'
+        'message' => 'Error al enviar mensaje. Por favor intenta nuevamente o contáctanos al 301 545 8611.'
     ]);
 }
 ?>

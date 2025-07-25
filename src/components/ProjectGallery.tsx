@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Camera } from "lucide-react";
@@ -19,16 +20,16 @@ import { ChevronLeft, ChevronRight, Camera } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "Equipo de Trabajo",
-    description: "Conoce a nuestro gran equipo de trabajo",
-    image: "/images/1.jpg", 
-    category: "Equipo"
+    title: "Mudanza Residencial Completa",
+    description: "Traslado seguro de hogar familiar en Medellín",
+    image: "/images/1.jpg", // ⬅️ CAMBIAR ESTA RUTA
+    category: "Residencial"
   },
   {
     id: 2,
     title: "Mudanza Comercial Oficina",
     description: "Reubicación de oficina empresarial",
-    image: "/images/2.jpg", 
+    image: "/images/2.jpg", // ⬅️ CAMBIAR ESTA RUTA
     category: "Comercial"
   },
   {
@@ -56,8 +57,33 @@ const projects = [
 
 export function ProjectGallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerView = 3; // Número de items visibles en desktop
+  
+  // Responsive items per view
+  const getItemsPerView = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 1 : 3; // 1 en móvil, 3 en desktop
+    }
+    return 3;
+  };
+  
+  const [itemsPerView, setItemsPerView] = useState(getItemsPerView());
   const maxIndex = Math.max(0, projects.length - itemsPerView);
+
+  // Actualizar itemsPerView cuando cambie el tamaño de pantalla
+  React.useEffect(() => {
+    const handleResize = () => {
+      const newItemsPerView = getItemsPerView();
+      setItemsPerView(newItemsPerView);
+      // Ajustar currentIndex si es necesario
+      const newMaxIndex = Math.max(0, projects.length - newItemsPerView);
+      if (currentIndex > newMaxIndex) {
+        setCurrentIndex(newMaxIndex);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [currentIndex]);
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => 
@@ -120,7 +146,7 @@ export function ProjectGallery() {
             {/* Carrusel de proyectos */}
             <div className="overflow-hidden rounded-2xl">
               <div 
-                className="flex transition-transform duration-500 ease-in-out"
+                className="flex transition-transform duration-500 ease-in-out md:gap-2"
                 style={{
                   transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`
                 }}
@@ -128,7 +154,7 @@ export function ProjectGallery() {
                 {projects.map((project) => (
                   <div 
                     key={project.id} 
-                    className="w-full md:w-1/3 flex-shrink-0 px-2"
+                    className="w-full md:w-1/3 flex-shrink-0 px-1 md:px-2"
                   >
                     <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-lg overflow-hidden">
                       <div className="relative aspect-[4/3] overflow-hidden">
@@ -141,7 +167,7 @@ export function ProjectGallery() {
                             backgroundPosition: 'center'
                           }}
                         >
-                          
+                        
                         </div>
                         
                         {/* Overlay con categoría */}
@@ -179,10 +205,10 @@ export function ProjectGallery() {
               </Button>
               
               <div className="flex space-x-2">
-                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                {Array.from({ length: projects.length }).map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => goToSlide(index)}
+                    onClick={() => setCurrentIndex(index)}
                     className={`w-3 h-3 rounded-full transition-colors ${
                       index === currentIndex ? 'bg-[#ff914d]' : 'bg-gray-300'
                     }`}
@@ -195,7 +221,7 @@ export function ProjectGallery() {
                 variant="outline"
                 size="sm"
                 className="border-[#ff914d] text-[#ff914d] hover:bg-[#ff914d] hover:text-white"
-                disabled={currentIndex >= maxIndex}
+                disabled={currentIndex >= projects.length - 1}
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
