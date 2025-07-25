@@ -1,0 +1,37 @@
+# Robots.txt para RUTA ÁGIL GROUP S.A.S
+# Permite indexación completa del sitio
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rutaagil.com.co/sitemap.xml
+
+# Archivos específicos permitidos
+Allow: /logo ruta agil.png
+Allow: /images/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+
+# Bloquear archivos innecesarios para SEO
+Disallow: /contact.php
+Disallow: /contact-phpmailer.php
+Disallow: /phpmailer-contact.php
+Disallow: /test-phpmailer.php
+Disallow: /debug-phpmailer.php
+Disallow: /PHPMailer/
+
+# Configuración de crawl delay (opcional)
+Crawl-delay: 1
+
+# Información adicional
+# Sitio web: https://rutaagil.com.co
+# Empresa: RUTA ÁGIL GROUP S.A.S
+# Servicios: Mudanzas, Envíos, Mensajería, Paquetería
+# Ubicación: Medellín, Colombia
+# Teléfono: +57 301 545 8611
