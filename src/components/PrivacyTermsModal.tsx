@@ -66,7 +66,7 @@ function PrivacyPolicy() {
         <h2 className="text-xl font-bold mb-2">Políticas de Privacidad</h2>
         <p className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          Última actualización: Enero 2025
+          Última actualización: Julio 2025
         </p>
       </div>
 
@@ -209,7 +209,7 @@ function TermsConditions() {
         <h2 className="text-xl font-bold mb-2">Términos y Condiciones</h2>
         <p className="flex items-center gap-2">
           <Calendar className="h-4 w-4" />
-          Última actualización: Enero 2025
+          Última actualización: Julio 2025
         </p>
       </div>
 

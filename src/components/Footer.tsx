@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Truck, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
+import {  Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import { openWhatsApp, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
 import { PrivacyTermsModal } from "./PrivacyTermsModal";
 
@@ -28,7 +28,7 @@ export function Footer() {
             <div className="flex space-x-4">
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://facebook.com/rutaagil', '_blank')}
+                onClick={() => window.open('https://www.facebook.com/profile.php?id=100087139382268&locale=es_LA', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Facebook - Ruta Ágil"
@@ -55,6 +55,7 @@ export function Footer() {
               </Button>
               <Button 
                 size="sm" 
+                onClick={() => window.open('https://www.instagram.com/ruta_mudanzas_envios/', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Instagram - Próximamente"
@@ -140,12 +141,12 @@ export function Footer() {
             </PrivacyTermsModal>
           </div>
           <a 
-            href="https://desklan.com.co" 
+            href="https://desklan.co/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block text-gray-400 text-sm hover:text-white transition-colors group"
           >
-            Desarrollado con <span className="text-[#ff914d]">❤️</span> por{' '}
+            Desarrollado por{' '}
             <span className="text-[#ff914d] font-semibold group-hover:text-[#e8823d] transition-colors">
               Desklan S.A.S
             </span>

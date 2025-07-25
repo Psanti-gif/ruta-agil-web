@@ -1,4 +1,7 @@
 <?php
+// Configurar zona horaria de Colombia
+date_default_timezone_set('America/Bogota');
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
@@ -41,7 +44,7 @@ if (isset($input['email']) && !empty($input['email'])) {
 $server_name = $_SERVER['SERVER_NAME'] ?? 'rutaagil.com.co';
 $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
-$timestamp = date('Y-m-d H:i:s');
+$timestamp = date('Y-m-d H:i:s T'); // Incluir zona horaria
 
 // Configuración de correo mejorada
 $to = 'info@rutaagil.com.co';
@@ -141,7 +144,7 @@ $html_message = "
     <div class='container'>
         <div class='header'>
             <h1>Nueva Consulta de Cliente</h1>
-            <p class='timestamp'>Recibida el $timestamp</p>
+            <p class='timestamp'>Recibida el $timestamp (Hora de Colombia)</p>
         </div>
         
         <div class='content'>
@@ -179,7 +182,8 @@ $html_message .= "
                 <small>
                     IP del Cliente: $client_ip<br>
                     Navegador: " . substr(htmlspecialchars($user_agent), 0, 100) . "<br>
-                    Servidor: $server_name
+                    Servidor: $server_name<br>
+                    Zona horaria: America/Bogota (COT)
                 </small>
             </div>
         </div>

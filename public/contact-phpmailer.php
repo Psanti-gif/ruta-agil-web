@@ -18,6 +18,13 @@ function sendJsonResponse($success, $message, $debug_info = null) {
     exit;
 }
 
+
+date_default_timezone_set('America/Bogota');
+
+// Verificar que la zona horaria se estableció correctamente
+$timezone = date_default_timezone_get();
+error_log("Zona horaria configurada: " . $timezone);
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     sendJsonResponse(false, 'Método no permitido');
@@ -77,22 +84,21 @@ if (isset($input['email']) && !empty(trim($input['email']))) {
 try {
     $mail = new PHPMailer(true);
 
- 
+  
     $mail->isSMTP();
     $mail->Host       = 'smtp.hostinger.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'info@rutaagil.com.co';
-    $mail->Password   = '4Dm1n123**'; 
+    $mail->Password   = '4Dm1n123**';
     
-
+    
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
     $mail->Port       = 465;
- 
-    
+  
     $mail->CharSet    = 'UTF-8';
     $mail->SMTPDebug  = 0;
     
-    // Configuración adicional optimizada para ambos puertos
+  
     $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
@@ -124,9 +130,12 @@ try {
     $mail->Subject = 'Nueva Consulta de Cliente - ' . $service . ' - RUTA AGIL';
     
     // Información adicional
-    $timestamp = date('Y-m-d H:i:s');
+    $timestamp = date('Y-m-d H:i:s T'); // Incluir zona horaria en el formato
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+    
+    // Log para verificar la hora
+    error_log("Timestamp generado: " . $timestamp);
     
     // ==========================================
     // 🎨 CONTENIDO HTML PROFESIONAL
@@ -225,7 +234,7 @@ try {
         <div class='container'>
             <div class='header'>
                 <h1>Nueva Consulta de Cliente</h1>
-                <p class='timestamp'>Recibida el $timestamp</p>
+                <p class='timestamp'>Recibida el $timestamp (Hora de Colombia)</p>
             </div>
             
             <div class='content'>
@@ -263,7 +272,8 @@ try {
                     <small>
                         IP del Cliente: $client_ip<br>
                         Navegador: " . substr(htmlspecialchars($user_agent), 0, 100) . "<br>
-                        Enviado vía: PHPMailer SMTP
+                        Enviado vía: PHPMailer SMTP<br>
+                        Zona horaria: America/Bogota (COT)
                     </small>
                 </div>
             </div>
@@ -292,7 +302,7 @@ try {
     
     Información técnica:
     IP: $client_ip
-    Fecha: $timestamp
+    Fecha: $timestamp (Hora de Colombia)
     ";
 
     // ==========================================
