@@ -51,9 +51,16 @@ export function ContactForm() {
       });
 
       console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
       
-      const result = await response.json();
+      let result;
+      try {
+        const responseText = await response.text();
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Error parsing JSON:', parseError);
+        throw new Error('Error en la respuesta del servidor');
+      }
+      
       console.log('Response result:', result);
 
       if (!response.ok || !result.success) {
