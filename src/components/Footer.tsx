@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import {Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
+import { Truck, Phone, Mail, MapPin, Facebook, Instagram } from "lucide-react";
 import { openWhatsApp, WHATSAPP_MESSAGES } from "@/lib/whatsapp";
+import { PrivacyTermsModal } from "./PrivacyTermsModal";
 
 export function Footer() {
   const handleWhatsAppClick = () => {
@@ -27,7 +28,7 @@ export function Footer() {
             <div className="flex space-x-4">
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://www.facebook.com/profile.php?id=100087139382268&locale=es_LA', '_blank')}
+                onClick={() => window.open('https://facebook.com/rutaagil', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
                 aria-label="Facebook - Ruta Ágil"
@@ -54,10 +55,9 @@ export function Footer() {
               </Button>
               <Button 
                 size="sm" 
-                onClick={() => window.open('https://www.instagram.com/ruta_mudanzas_envios/', '_blank')}
                 variant="outline" 
                 className="border-gray-600 text-gray-300 hover:bg-[#ff914d] hover:border-[#ff914d] hover:text-white transition-all duration-300"
-                aria-label="Instagram - ruta_mudanzas_envios"
+                aria-label="Instagram - Próximamente"
               >
                 <Instagram className="h-4 w-4" />
               </Button>
@@ -127,15 +127,33 @@ export function Footer() {
             © 2025 RUTA ÁGIL GROUP S.A.S. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <span className="text-gray-400 text-sm">
-              Facebook: Ruta Ágil
+          <div className="flex space-x-4 text-sm">
+            <PrivacyTermsModal defaultTab="privacy">
+              <button className="text-gray-400 hover:text-white transition-colors underline">
+                Políticas de Privacidad
+              </button>
+            </PrivacyTermsModal>
+            <PrivacyTermsModal defaultTab="terms">
+              <button className="text-gray-400 hover:text-white transition-colors underline">
+                Términos y Condiciones
+              </button>
+            </PrivacyTermsModal>
+          </div>
+          <a 
+            href="https://desklan.com.co" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block text-gray-400 text-sm hover:text-white transition-colors group"
+          >
+            Desarrollado con <span className="text-[#ff914d]">❤️</span> por{' '}
+            <span className="text-[#ff914d] font-semibold group-hover:text-[#e8823d] transition-colors">
+              Desklan S.A.S
             </span>
-            <span className="text-gray-400 text-sm">
-              TikTok: @rutaagil
-            </span>
+          </a>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+  
