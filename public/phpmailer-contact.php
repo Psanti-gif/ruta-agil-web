@@ -1,14 +1,4 @@
 <?php
-
-if (!file_exists('PHPMailer/src/PHPMailer.php')) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'PHPMailer no está instalado. Por favor, descarga PHPMailer desde GitHub y súbelo a tu hosting.'
-    ]);
-    exit;
-}
-
 require_once 'PHPMailer/src/Exception.php';
 require_once 'PHPMailer/src/PHPMailer.php';
 require_once 'PHPMailer/src/SMTP.php';
@@ -16,6 +6,7 @@ require_once 'PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -51,237 +42,102 @@ if (isset($input['email']) && !empty($input['email'])) {
     }
 }
 
+
 try {
     $mail = new PHPMailer(true);
 
-   
-    
+    // Configuración del servidor SMTP de Hostinger
     $mail->isSMTP();
-    $mail->Host       = 'smtp.hostinger.com';          
+    $mail->Host       = 'smtp.hostinger.com'; // Servidor SMTP de Hostinger
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'info@rutaagil.com.co';         
-    $mail->Password   = '4Dm1n123**';            
+    $mail->Username   = 'info@rutaagil.com.co'; // Tu email
+    $mail->Password   = 'TU_PASSWORD_AQUI';     // Tu contraseña de email
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 465;
+    $mail->Port       = 587;
     $mail->CharSet    = 'UTF-8';
-    
-   
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        )
-    );
 
-    // ==========================================
-    // 📧 CONFIGURACIÓN DEL CORREO
-    // ==========================================
-    
-    // Remitente (debe coincidir con el email SMTP)
+    // Configuración del remitente
     $mail->setFrom('info@rutaagil.com.co', 'RUTA AGIL - Formulario Web');
-    
-    // Destinatario
     $mail->addAddress('info@rutaagil.com.co', 'RUTA AGIL');
     
-    // Reply-To (si el cliente proporcionó email)
     if (!empty($email)) {
         $mail->addReplyTo($email, $name);
     }
 
-    // Configuración del mensaje
+    // Contenido del correo
     $mail->isHTML(true);
     $mail->Subject = 'Nueva Consulta de Cliente - ' . $service . ' - RUTA AGIL';
     
-    // Información adicional
     $timestamp = date('Y-m-d H:i:s');
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
-    
-    // ==========================================
-    // 🎨 CONTENIDO HTML PROFESIONAL
-    // ==========================================
     
     $mail->Body = "
     <!DOCTYPE html>
     <html lang='es'>
     <head>
         <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Consulta de Cliente - RUTA AGIL</title>
         <style>
-            body { 
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-                line-height: 1.6; 
-                color: #333333; 
-                margin: 0; 
-                padding: 0; 
-                background-color: #f4f4f4; 
-            }
-            .container { 
-                max-width: 600px; 
-                margin: 20px auto; 
-                background-color: #ffffff; 
-                border-radius: 8px; 
-                overflow: hidden; 
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            }
-            .header { 
-                background: linear-gradient(135deg, #ff914d 0%, #e8823d 100%); 
-                color: white; 
-                padding: 30px 20px; 
-                text-align: center; 
-            }
-            .header h1 { 
-                margin: 0; 
-                font-size: 24px; 
-                font-weight: 600; 
-            }
-            .content { 
-                padding: 30px 20px; 
-            }
-            .field { 
-                margin-bottom: 20px; 
-                padding: 15px; 
-                background-color: #f8f9fa; 
-                border-left: 4px solid #ff914d; 
-                border-radius: 4px; 
-            }
-            .label { 
-                font-weight: 600; 
-                color: #0966e1; 
-                display: block; 
-                margin-bottom: 5px; 
-            }
-            .value { 
-                color: #333333; 
-                font-size: 16px; 
-            }
-            .service-badge { 
-                background: linear-gradient(135deg, #0966e1 0%, #0854c7 100%); 
-                color: white; 
-                padding: 10px 20px; 
-                border-radius: 25px; 
-                display: inline-block; 
-                font-weight: 600; 
-                margin: 10px 0; 
-            }
-            .footer { 
-                background-color: #333333; 
-                color: #ffffff; 
-                padding: 20px; 
-                text-align: center; 
-                font-size: 14px; 
-            }
-            .footer a { 
-                color: #ff914d; 
-                text-decoration: none; 
-            }
-            .info-box { 
-                background-color: #e8f4fd; 
-                padding: 15px; 
-                border-radius: 6px; 
-                margin: 20px 0; 
-                border-left: 4px solid #0966e1; 
-            }
-            .timestamp { 
-                color: #666666; 
-                font-size: 14px; 
-                font-style: italic; 
-            }
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: #ff914d; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+            .content { background: #f9f9f9; padding: 20px; }
+            .field { margin-bottom: 15px; padding: 10px; background: white; border-left: 4px solid #0966e1; }
+            .label { font-weight: bold; color: #0966e1; }
+            .footer { background: #333; color: white; padding: 15px; text-align: center; border-radius: 0 0 8px 8px; }
         </style>
     </head>
     <body>
         <div class='container'>
             <div class='header'>
-                <h1>Nueva Consulta de Cliente</h1>
-                <p class='timestamp'>Recibida el $timestamp</p>
+                <h2>Nueva Consulta de Cliente - RUTA AGIL</h2>
+                <p>Recibida el $timestamp</p>
             </div>
-            
             <div class='content'>
-                <div class='info-box'>
-                    <strong>Tipo de Servicio Solicitado:</strong>
-                    <div class='service-badge'>$service</div>
-                </div>
-                
                 <div class='field'>
-                    <span class='label'>Nombre del Cliente:</span>
-                    <div class='value'>$name</div>
+                    <span class='label'>Servicio:</span> $service
                 </div>
-                
                 <div class='field'>
-                    <span class='label'>Número de Contacto:</span>
-                    <div class='value'>$phone</div>
+                    <span class='label'>Nombre:</span> $name
+                </div>
+                <div class='field'>
+                    <span class='label'>Teléfono:</span> $phone
                 </div>";
-
+    
     if (!empty($email)) {
         $mail->Body .= "
                 <div class='field'>
-                    <span class='label'>Correo Electrónico:</span>
-                    <div class='value'>$email</div>
+                    <span class='label'>Email:</span> $email
                 </div>";
     }
-
+    
     $mail->Body .= "
                 <div class='field'>
-                    <span class='label'>Mensaje del Cliente:</span>
-                    <div class='value'>" . nl2br(htmlspecialchars($message)) . "</div>
+                    <span class='label'>Mensaje:</span><br>" . nl2br(htmlspecialchars($message)) . "
                 </div>
-                
-                <div class='info-box'>
-                    <strong>Información Técnica:</strong><br>
-                    <small>
-                        IP del Cliente: $client_ip<br>
-                        Navegador: " . substr(htmlspecialchars($user_agent), 0, 100) . "<br>
-                        Enviado vía: PHPMailer SMTP
-                    </small>
+                <div class='field'>
+                    <small>IP: $client_ip</small>
                 </div>
             </div>
-            
             <div class='footer'>
                 <p><strong>RUTA AGIL GROUP S.A.S</strong></p>
-                <p>Servicios Profesionales de Mudanza y Logística</p>
-                <p>Contacto directo: <a href='tel:+573015458611'>301 545 8611</a></p>
-                <p>Este mensaje fue enviado desde el formulario oficial de contacto</p>
+                <p>Contacto: 301 545 8611</p>
             </div>
         </div>
     </body>
     </html>";
 
-    // Versión texto plano como respaldo
-    $mail->AltBody = "
-    Nueva Consulta de Cliente - RUTA AGIL
-    
-    Servicio: $service
-    Nombre: $name
-    Teléfono: $phone" . 
-    (!empty($email) ? "\nEmail: $email" : "") . "
-    
-    Mensaje:
-    $message
-    
-    Información técnica:
-    IP: $client_ip
-    Fecha: $timestamp
-    ";
-
-    // ==========================================
-    // 🚀 ENVIAR CORREO
-    // ==========================================
-    
     $mail->send();
-    
     echo json_encode([
         'success' => true, 
-        'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto. También puedes escribirnos al WhatsApp 301 545 8611.'
+        'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.'
     ]);
 
 } catch (Exception $e) {
-    error_log("Error PHPMailer: " . $mail->ErrorInfo);
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'Error al enviar mensaje. Por favor intenta nuevamente o contáctanos al 301 545 8611. Error técnico: ' . $mail->ErrorInfo
+        'message' => 'Error al enviar mensaje: ' . $mail->ErrorInfo
     ]);
 }
+
 ?>
