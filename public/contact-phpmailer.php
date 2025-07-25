@@ -1,139 +1,136 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
+error_reporting(0);
+ini_set('display_errors', 0);
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
-
-$phpmailer_paths = [
-    'PHPMailer/src/PHPMailer.php',
-    'phpmailer/src/PHPMailer.php',
-    'vendor/phpmailer/phpmailer/src/PHPMailer.php',
-    '../PHPMailer/src/PHPMailer.php'
-];
-
-$phpmailer_found = false;
-$phpmailer_path = '';
-
-foreach ($phpmailer_paths as $path) {
-    if (file_exists($path)) {
-        $phpmailer_found = true;
-        $phpmailer_path = dirname($path);
-        break;
+// Función para enviar respuesta JSON y terminar ejecución
+function sendJsonResponse($success, $message, $debug_info = null) {
+    $response = ['success' => $success, 'message' => $message];
+    if ($debug_info) {
+        $response['debug_info'] = $debug_info;
     }
-}
-
-if (!$phpmailer_found) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'PHPMailer no encontrado. Rutas verificadas: ' . implode(', ', $phpmailer_paths)
-    ]);
+    echo json_encode($response);
     exit;
 }
 
-require_once $phpmailer_path . '/Exception.php';
-require_once $phpmailer_path . '/PHPMailer.php';
-require_once $phpmailer_path . '/SMTP.php';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    sendJsonResponse(false, 'Método no permitido');
+}
+
+// Cargar PHPMailer (sabemos que está en PHPMailer/src/)
+try {
+    require_once 'PHPMailer/src/Exception.php';
+    require_once 'PHPMailer/src/PHPMailer.php';
+    require_once 'PHPMailer/src/SMTP.php';
+} catch (Exception $e) {
+    http_response_code(500);
+    sendJsonResponse(false, 'Error al cargar PHPMailer: ' . $e->getMessage());
+}
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Método no permitido']);
-    exit;
+// Obtener y validar datos de entrada
+$raw_input = file_get_contents('php://input');
+if (empty($raw_input)) {
+    http_response_code(400);
+    sendJsonResponse(false, 'No se recibieron datos');
 }
 
-
-$raw_input = file_get_contents('php://input');
 $input = json_decode($raw_input, true);
-
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Error en formato JSON: ' . json_last_error_msg()
-    ]);
-    exit;
+    sendJsonResponse(false, 'Error en formato JSON: ' . json_last_error_msg());
 }
 
-if (!isset($input['name']) || !isset($input['phone']) || !isset($input['service']) || !isset($input['message'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Faltan campos requeridos']);
-    exit;
-}
-
-$name = filter_var($input['name'], FILTER_SANITIZE_STRING);
-$phone = filter_var($input['phone'], FILTER_SANITIZE_STRING);
-$service = filter_var($input['service'], FILTER_SANITIZE_STRING);
-$message = filter_var($input['message'], FILTER_SANITIZE_STRING);
-
-$email = '';
-if (isset($input['email']) && !empty($input['email'])) {
-    $email = filter_var($input['email'], FILTER_VALIDATE_EMAIL);
-    if (!$email) {
+// Validar campos requeridos
+$required_fields = ['name', 'phone', 'service', 'message'];
+foreach ($required_fields as $field) {
+    if (!isset($input[$field]) || empty(trim($input[$field]))) {
         http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Email inválido']);
-        exit;
+        sendJsonResponse(false, "Campo requerido faltante: $field");
     }
 }
+
+$name = filter_var(trim($input['name']), FILTER_SANITIZE_STRING);
+$phone = filter_var(trim($input['phone']), FILTER_SANITIZE_STRING);
+$service = filter_var(trim($input['service']), FILTER_SANITIZE_STRING);
+$message = filter_var(trim($input['message']), FILTER_SANITIZE_STRING);
+
+$email = '';
+if (isset($input['email']) && !empty(trim($input['email']))) {
+    $email = filter_var(trim($input['email']), FILTER_VALIDATE_EMAIL);
+    if (!$email) {
+        http_response_code(400);
+        sendJsonResponse(false, 'Email inválido');
+    }
+}
+
 
 try {
     $mail = new PHPMailer(true);
 
  
-    
     $mail->isSMTP();
-    $mail->Host       = 'smtp.hostinger.com';         
+    $mail->Host       = 'smtp.hostinger.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'info@rutaagil.com.co';         
-    $mail->Password   = '4Dm1n123**';   
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 465;
-    $mail->CharSet    = 'UTF-8';
+    $mail->Username   = 'info@rutaagil.com.co';
+    $mail->Password   = '4Dm1n123**'; 
     
 
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; 
+    $mail->Port       = 465;
+ 
+    
+    $mail->CharSet    = 'UTF-8';
+    $mail->SMTPDebug  = 0;
+    
+    // Configuración adicional optimizada para ambos puertos
     $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
             'verify_peer_name' => false,
-            'allow_self_signed' => true
+            'allow_self_signed' => true,
+            'crypto_method' => STREAM_CRYPTO_METHOD_TLS_CLIENT
         )
     );
+    
+    $mail->Timeout = 30; // Timeout optimizado
 
-
+    // ==========================================
+    // 📧 CONFIGURACIÓN DEL CORREO
+    // ==========================================
+    
+    // Remitente (debe coincidir con el email SMTP)
     $mail->setFrom('info@rutaagil.com.co', 'RUTA AGIL - Formulario Web');
     
-
+    // Destinatario
     $mail->addAddress('info@rutaagil.com.co', 'RUTA AGIL');
     
-
+    // Reply-To (si el cliente proporcionó email)
     if (!empty($email)) {
         $mail->addReplyTo($email, $name);
     }
 
-
+    // Configuración del mensaje
     $mail->isHTML(true);
     $mail->Subject = 'Nueva Consulta de Cliente - ' . $service . ' - RUTA AGIL';
     
- 
+    // Información adicional
     $timestamp = date('Y-m-d H:i:s');
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
     
-   
+    // ==========================================
+    // 🎨 CONTENIDO HTML PROFESIONAL
+    // ==========================================
     
     $mail->Body = "
     <!DOCTYPE html>
@@ -281,7 +278,7 @@ try {
     </body>
     </html>";
 
-
+    // Versión texto plano como respaldo
     $mail->AltBody = "
     Nueva Consulta de Cliente - RUTA AGIL
     
@@ -298,21 +295,17 @@ try {
     Fecha: $timestamp
     ";
 
-
+    // ==========================================
+    // 🚀 ENVIAR CORREO
+    // ==========================================
     
     $mail->send();
     
-    echo json_encode([
-        'success' => true, 
-        'message' => 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto. También puedes escribirnos al WhatsApp 301 545 8611.'
-    ]);
+    sendJsonResponse(true, 'Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto. También puedes escribirnos al WhatsApp 301 545 8611.');
 
 } catch (Exception $e) {
     error_log("Error PHPMailer: " . $mail->ErrorInfo);
     http_response_code(500);
-    echo json_encode([
-        'success' => false, 
-        'message' => 'Error al enviar mensaje. Por favor intenta nuevamente o contáctanos al 301 545 8611. Error técnico: ' . $mail->ErrorInfo
-    ]);
+    sendJsonResponse(false, 'Error al enviar mensaje. Por favor intenta nuevamente o contáctanos al 301 545 8611. Error técnico: ' . $mail->ErrorInfo);
 }
 ?>

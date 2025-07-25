@@ -80,6 +80,10 @@ export function OperationsArea() {
                 <Button 
                   size="lg" 
                   className="bg-[#ff914d] hover:bg-[#e8823d] text-white"
+                 onClick={() => {
+                   const gallery = document.getElementById('galeria-proyectos');
+                   gallery?.scrollIntoView({ behavior: 'smooth' });
+                 }}
                 >
                   Conocer Más
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -112,7 +116,7 @@ export function OperationsArea() {
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <div className="w-3 h-3 bg-[#0966e1] rounded-full"></div>
-                        <span className="text-gray-700">Expansión 2024</span>
+                        <span className="text-gray-700">Expansión 2025</span>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <div className="w-3 h-3 bg-green-500 rounded-full"></div>
