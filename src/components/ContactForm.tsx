@@ -41,8 +41,8 @@ export function ContactForm() {
     setSubmitStatus('idle');
 
     try {
-      // Envío usando PHP backend compatible con Hostinger
-      const response = await fetch('/contact.php', {
+      // Envío usando PHPMailer con SMTP para máxima entregabilidad
+      const response = await fetch('/contact-phpmailer.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
