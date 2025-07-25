@@ -1,25 +1,54 @@
 <?php
-if (!file_exists('PHPMailer/src/PHPMailer.php')) {
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+
+$phpmailer_paths = [
+    'PHPMailer/src/PHPMailer.php',
+    'phpmailer/src/PHPMailer.php',
+    'vendor/phpmailer/phpmailer/src/PHPMailer.php',
+    '../PHPMailer/src/PHPMailer.php'
+];
+
+$phpmailer_found = false;
+$phpmailer_path = '';
+
+foreach ($phpmailer_paths as $path) {
+    if (file_exists($path)) {
+        $phpmailer_found = true;
+        $phpmailer_path = dirname($path);
+        break;
+    }
+}
+
+if (!$phpmailer_found) {
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'PHPMailer no está instalado. Por favor, descarga PHPMailer desde GitHub y súbelo a tu hosting.'
+        'message' => 'PHPMailer no encontrado. Rutas verificadas: ' . implode(', ', $phpmailer_paths)
     ]);
     exit;
 }
 
-require_once 'PHPMailer/src/Exception.php';
-require_once 'PHPMailer/src/PHPMailer.php';
-require_once 'PHPMailer/src/SMTP.php';
+require_once $phpmailer_path . '/Exception.php';
+require_once $phpmailer_path . '/PHPMailer.php';
+require_once $phpmailer_path . '/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -27,7 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
+
+$raw_input = file_get_contents('php://input');
+$input = json_decode($raw_input, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Error en formato JSON: ' . json_last_error_msg()
+    ]);
+    exit;
+}
 
 if (!isset($input['name']) || !isset($input['phone']) || !isset($input['service']) || !isset($input['message'])) {
     http_response_code(400);
@@ -53,17 +93,18 @@ if (isset($input['email']) && !empty($input['email'])) {
 try {
     $mail = new PHPMailer(true);
 
-    
+ 
     
     $mail->isSMTP();
-    $mail->Host       = 'smtp.hostinger.com';           
+    $mail->Host       = 'smtp.hostinger.com';         
     $mail->SMTPAuth   = true;
     $mail->Username   = 'info@rutaagil.com.co';         
-    $mail->Password   = '4Dm1n123**';             
+    $mail->Password   = '4Dm1n123**';   
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 465;
     $mail->CharSet    = 'UTF-8';
     
+
     $mail->SMTPOptions = array(
         'ssl' => array(
             'verify_peer' => false,
@@ -73,24 +114,26 @@ try {
     );
 
 
-    
     $mail->setFrom('info@rutaagil.com.co', 'RUTA AGIL - Formulario Web');
     
 
     $mail->addAddress('info@rutaagil.com.co', 'RUTA AGIL');
     
+
     if (!empty($email)) {
         $mail->addReplyTo($email, $name);
     }
 
+
     $mail->isHTML(true);
     $mail->Subject = 'Nueva Consulta de Cliente - ' . $service . ' - RUTA AGIL';
     
+ 
     $timestamp = date('Y-m-d H:i:s');
     $client_ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
     $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
     
-  
+   
     
     $mail->Body = "
     <!DOCTYPE html>
@@ -238,7 +281,7 @@ try {
     </body>
     </html>";
 
- 
+
     $mail->AltBody = "
     Nueva Consulta de Cliente - RUTA AGIL
     
@@ -255,7 +298,8 @@ try {
     Fecha: $timestamp
     ";
 
- 
+
+    
     $mail->send();
     
     echo json_encode([

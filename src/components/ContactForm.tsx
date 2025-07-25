@@ -50,7 +50,11 @@ export function ContactForm() {
         body: JSON.stringify(data),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      
       const result = await response.json();
+      console.log('Response result:', result);
 
       if (!response.ok || !result.success) {
         throw new Error(result.message || 'Error al enviar el mensaje');
